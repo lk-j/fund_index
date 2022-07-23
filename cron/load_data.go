@@ -1,18 +1,23 @@
 package cron
 
 import (
-	"fmt"
 	"fund_index/db"
+	"fund_index/model"
 )
 
 //载入基金净值数据到内存
-func loadFundRatio()  {
+func  loadFundRatio()  {
 	//获取基金列表
-	fundList := db.GetFundCodeList()
+	fundList := db.NewFundCode()
+	fundRatio := db.NewFundRatio()
+	fundRatioFormat := model.NewFundRatioFormat()
 	//遍历基金列表，获取净值数据，写入内存
-	for _, item := range fundList {
+	for _, item := range fundList.GetFundCodeList() {
 		code := item.Code
-		fmt.Println(code)
-	}
+		ratioList := fundRatio.GetFundRatioList(code)
+		if code != "" && ratioList !=nil {
+			fundRatioFormat.UpdateMap(code, ratioList)
+		}
 
+	}
 }
