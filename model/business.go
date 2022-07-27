@@ -50,7 +50,7 @@ func GetMaxBack(w http.ResponseWriter, r *http.Request)  {
 	res := &Resp{
 		Status: "200",
 		Msg: "",
-		Data: failBack,
+		Data: failBack[0:100],
 	}
 	json.NewEncoder(w).Encode(res)
 }
