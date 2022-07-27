@@ -38,6 +38,8 @@ func calValue(ratioList []db.Ratio, code string)  FailBack {
 			tmp := (ratioList[i].Value-max)/max
 			 if tmp<dp[i-1] {
 				 dp[i] = tmp
+			 } else {
+				 dp[i] = dp[i-1]
 			 }
 		}
 	}

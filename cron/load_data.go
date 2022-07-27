@@ -20,14 +20,9 @@ func  loadFundRatio()  {
 	fundRatioFormat := model.NewFundRatioFormat()
 	//遍历基金列表，获取净值数据，写入内存
 	list :=fundList.GetFundCodeList()
-	var count int
 	for _, item := range list {
-		if count>100 {
-			break
-		}
-		count++
-		code := item.Code
-		updateMap(code,fundRatio,fundRatioFormat)
+		updateMap(item.Code,fundRatio,fundRatioFormat)
+
 	}
 }
 var  Lock sync.RWMutex
