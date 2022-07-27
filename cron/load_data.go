@@ -27,7 +27,6 @@ func  loadFundRatio()  {
 }
 var  Lock sync.RWMutex
 func updateMap(code string,fundRatio *db.FundRatio, fundRatioFormat *model.FundRatioFormat)  {
-
 	Lock.Lock()
 	defer Lock.Unlock()
 	ratioList := fundRatio.GetFundRatioList(code)

@@ -2,7 +2,6 @@ package model
 
 import (
 	"fund_index/db"
-	"strconv"
 )
 
 type FailBack struct {
@@ -36,9 +35,7 @@ func calValue(ratioList []db.Ratio, code string)  FailBack {
 			dp[i] = dp[i-1]
 			max = ratioList[i].Value
 		} else {
-			chu,_ := strconv.ParseFloat(ratioList[i].Value, 8)
-			beichu,_ := strconv.ParseFloat(max, 8)
-			tmp := (chu-beichu)/beichu
+			tmp := (ratioList[i].Value-max)/max
 			 if (tmp<dp[i-1]) {
 				 dp[i] = tmp
 			 }

@@ -12,7 +12,7 @@ type FundRatio struct {
 type Ratio struct {
 	Code  string `bson:"code"`
 	Date string  `bson:"date"`
-	Value string `bson:"value"`
+	Value float64 `bson:"value"`
 }
 //获取基金净值列表 by code
 func (fund FundRatio) GetFundRatioList(code string) []Ratio {
