@@ -4,12 +4,8 @@ import (
 	"fmt"
 	"fund_index/db"
 	"fund_index/model"
-	"github.com/panjf2000/ants/v2"
+	"sync"
 )
-var pool *ants.PoolWithFunc
-func init()  {
-	pool, _ = ants.NewPoolWithFunc(5, updateMap)
-}
 
 type param struct {
 	code string
@@ -26,17 +22,17 @@ func  loadFundRatio()  {
 	list :=fundList.GetFundCodeList()
 	for _, item := range list {
 		code := item.Code
-		 params := param{
-			code:code,fundRatio:fundRatio,fundRatioFormat:fundRatioFormat,
-		}
-		pool.Invoke(params)
+		updateMap(code,fundRatio,fundRatioFormat)
 	}
 }
-func updateMap(data interface{})  {
-	params := data.(param)
-	ratioList := params.fundRatio.GetFundRatioList(params.code)
-	if params.code != "" && ratioList !=nil {
-		params.fundRatioFormat.UpdateMap(params.code, ratioList)
+var  Lock sync.RWMutex
+func updateMap(code string,fundRatio *db.FundRatio, fundRatioFormat *model.FundRatioFormat)  {
+
+	Lock.Lock()
+	defer Lock.Unlock()
+	ratioList := fundRatio.GetFundRatioList(code)
+	if code != "" && ratioList !=nil {
+		fundRatioFormat.UpdateMap(code, ratioList)
 	}
-	fmt.Println(params.code)
+	fmt.Println(code)
 }
