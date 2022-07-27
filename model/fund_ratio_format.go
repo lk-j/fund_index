@@ -17,7 +17,7 @@ func (f FundRatioFormat) UpdateMap(code string,ratioList []db.Ratio)  {
 	f.data[code] = ratioList
 }
 //获取单个股票的数据
-func (f FundRatioFormat)  GetFundRatio(code string,starttime string, endtime string)  []db.Ratio {
+func (f FundRatioFormat)  GetFundRatio(code string,starttime int, endtime int)  []db.Ratio {
 	var ratioList []db.Ratio
 	for _, v := range f.data[code] {
 		if v.Date>=starttime && v.Date<endtime {

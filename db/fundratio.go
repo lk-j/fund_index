@@ -11,7 +11,7 @@ type FundRatio struct {
 
 type Ratio struct {
 	Code  string `bson:"code"`
-	Date string  `bson:"date"`
+	Date int  `bson:"date"`
 	Value float64 `bson:"value"`
 }
 //获取基金净值列表 by code

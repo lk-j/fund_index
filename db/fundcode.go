@@ -28,7 +28,7 @@ func (fund *FundCodeService) GetFundCodeList()  []FundCode {
 	db := getDB()
 	c := db.C("fundcode")
 	if err := c.Find(filter).All(&fundCode); err !=nil {
-		log.Println("GetFundCodeList error err:%s", err.Error())
+		log.Printf("GetFundCodeList error err:%s\n", err.Error())
 	}
 	fund.data = fundCode
 	return fundCode

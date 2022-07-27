@@ -5,6 +5,8 @@ import (
 	"fund_index/db"
 	"net/http"
 	"sort"
+	"strconv"
+	"time"
 )
 
 type Resp struct {
@@ -37,7 +39,14 @@ func GetMaxBack(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 	code := db.NewFundCodeService()
-	failBack := calMaxBack(code.GetFundCodeList(), starttime[0], endtime[0])
+	Loc, _ := time.LoadLocation("Asia/Shanghai")
+
+	// 格式 2006-01-02, 待转化日期 2021-11-02
+	start, _ := time.ParseInLocation("2006-01-02", starttime[0], Loc)
+	startInt,_ :=strconv.Atoi(start.String())
+	end, _ := time.ParseInLocation("2006-01-02", endtime[0], Loc)
+	endInt,_ :=strconv.Atoi(end.String())
+	failBack := calMaxBack(code.GetFundCodeList(), startInt, endInt)
 	sort.Slice(failBack, func(i, j int) bool {
 		return failBack[i].Value<failBack[j].Value
 	})

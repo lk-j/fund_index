@@ -9,7 +9,7 @@ type FailBack struct {
 	Value float64
 }
 //计算最大回撤
-func calMaxBack(codeList []db.FundCode, starttime string, endtime string) []FailBack {
+func calMaxBack(codeList []db.FundCode, starttime int, endtime int) []FailBack {
 	var format = NewFundRatioFormat()
 	var failBackList  []FailBack
 	for _, v := range codeList {
@@ -31,12 +31,12 @@ func calValue(ratioList []db.Ratio, code string)  FailBack {
 	 dp[0] = 0
 	max := ratioList[0].Value
 	for i := 1; i < len(ratioList); i++ {
-		if (ratioList[i].Value>max) {
+		if ratioList[i].Value>max {
 			dp[i] = dp[i-1]
 			max = ratioList[i].Value
 		} else {
 			tmp := (ratioList[i].Value-max)/max
-			 if (tmp<dp[i-1]) {
+			 if tmp<dp[i-1] {
 				 dp[i] = tmp
 			 }
 		}
