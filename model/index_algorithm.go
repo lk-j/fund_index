@@ -7,7 +7,7 @@ import (
 
 type FailBack struct {
 	Code string
-	Value string
+	Value float64
 }
 //计算最大回撤
 func calMaxBack(codeList []db.FundCode, starttime string, endtime string) []FailBack {
@@ -23,7 +23,7 @@ func calMaxBack(codeList []db.FundCode, starttime string, endtime string) []Fail
 func calValue(ratioList []db.Ratio, code string)  FailBack {
 	var fallback = FailBack{
 		Code: code,
-		Value: "0",
+		Value: 0,
 	}
 	if ratioList == nil {
 		return fallback
@@ -44,7 +44,7 @@ func calValue(ratioList []db.Ratio, code string)  FailBack {
 			 }
 		}
 	}
-	fallback.Value = strconv.FormatFloat(dp[len(ratioList)-1],  'f', 8, 64)
+	fallback.Value = dp[len(ratioList)-1]
 	return fallback
 }
 

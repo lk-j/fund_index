@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fund_index/db"
 	"net/http"
+	"sort"
 )
 
 type Resp struct {
@@ -37,6 +38,9 @@ func GetMaxBack(w http.ResponseWriter, r *http.Request)  {
 	}
 	code := db.NewFundCodeService()
 	failBack := calMaxBack(code.GetFundCodeList(), starttime[0], endtime[0])
+	sort.Slice(failBack, func(i, j int) bool {
+		return failBack[i].Value<failBack[j].Value
+	})
 	res := &Resp{
 		Status: "200",
 		Msg: "",
