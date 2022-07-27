@@ -3,16 +3,26 @@ package db
 import (
 	"gopkg.in/mgo.v2/bson"
 	"log"
+	"sync"
 )
 
 
+type FundCodeService struct {
+	data []FundCode
+}
 type FundCode struct {
 	Name string
 	Code  string
 }
-
+var (
+	once   sync.Once
+	single *FundCodeService
+)
 //获取基金列表
-func (fund *FundCode) GetFundCodeList()  []FundCode {
+func (fund *FundCodeService) GetFundCodeList()  []FundCode {
+	if fund.data !=nil {
+		return fund.data
+	}
 	filter:= bson.D{}
 	var fundCode []FundCode
 	db := getDB()
@@ -20,9 +30,13 @@ func (fund *FundCode) GetFundCodeList()  []FundCode {
 	if err := c.Find(filter).All(&fundCode); err !=nil {
 		log.Println("GetFundCodeList error err:%s", err.Error())
 	}
+	fund.data = fundCode
 	return fundCode
 }
 
-func NewFundCode()  *FundCode {
-	return &FundCode{}
+func NewFundCodeService()  *FundCodeService {
+	once.Do(func() {
+		single = &FundCodeService{}
+	})
+	return single
 }

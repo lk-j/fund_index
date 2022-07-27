@@ -7,6 +7,6 @@ import (
 func Run()  {
 	loadFundRatio()
 	c := cron.New()
-	c.AddFunc("* * * * *", loadFundRatio)
+	c.AddFunc("0 0 */1 * *", loadFundRatio)
 	c.Start()
 }

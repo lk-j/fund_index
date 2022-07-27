@@ -5,7 +5,7 @@ import (
 	"fund_index/web"
 )
 
-func main()  {
-	cron.Run()
+func main() {
+	go cron.Run()
 	web.Run()
 }

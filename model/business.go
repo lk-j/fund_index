@@ -35,7 +35,7 @@ func GetMaxBack(w http.ResponseWriter, r *http.Request)  {
 		json.NewEncoder(w).Encode(res)
 		return
 	}
-	code := db.NewFundCode()
+	code := db.NewFundCodeService()
 	failBack := calMaxBack(code.GetFundCodeList(), starttime[0], endtime[0])
 	res := &Resp{
 		Status: "200",

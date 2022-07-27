@@ -8,7 +8,7 @@ import (
 )
 var pool *ants.PoolWithFunc
 func init()  {
-	pool, _ = ants.NewPoolWithFunc(10, updateMap)
+	pool, _ = ants.NewPoolWithFunc(5, updateMap)
 }
 
 type param struct {
@@ -19,11 +19,12 @@ type param struct {
 //载入基金净值数据到内存
 func  loadFundRatio()  {
 	//获取基金列表
-	fundList := db.NewFundCode()
+	fundList := db.NewFundCodeService()
 	fundRatio := db.NewFundRatio()
 	fundRatioFormat := model.NewFundRatioFormat()
 	//遍历基金列表，获取净值数据，写入内存
-	for _, item := range fundList.GetFundCodeList() {
+	list :=fundList.GetFundCodeList()
+	for _, item := range list {
 		code := item.Code
 		 params := param{
 			code:code,fundRatio:fundRatio,fundRatioFormat:fundRatioFormat,
